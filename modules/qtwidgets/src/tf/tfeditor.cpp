@@ -558,8 +558,7 @@ void TFEditor::contextMenuEvent(QGraphicsSceneContextMenuEvent* e) {
     auto tfMenu = menu.addMenu("&Transfer Function");
     {
         if (tfPropertyPtr_->hasTF()) {
-            util::addTFPresetsMenu(
-                e->widget(), tfMenu, tfPropertyPtr_->getTFProperty());
+            util::addTFPresetsMenu(e->widget(), tfMenu, tfPropertyPtr_->getTFProperty());
             tfMenu->addSeparator();
         }
 

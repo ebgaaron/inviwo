@@ -185,7 +185,7 @@ struct TestPropagator : EventPropagator {
  * Global index 5 will map to Pick Action 2, id 2;
  */
 
-auto makeCanvas() {
+constexpr auto makeCanvas() {
     // clang-format off
     std::array<std::array<size_t, 10>, 10> canvas =
     {{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -256,7 +256,7 @@ using PHS = PickingHoverState;
 
 const auto canvas = makeCanvas();
 const uvec2 dim{canvas.size(), canvas.size()};
-const auto ndc = [&](uvec2 pos) { return dvec3{2.0 * dvec2{pos} / dvec2{dim} - dvec2{1.0}, 0.5}; };
+const auto ndc = [](uvec2 pos) { return dvec3{2.0 * dvec2{pos} / dvec2{10.0} - dvec2{1.0}, 0.5}; };
 
 TEST(PickingControllerTest, IdleMove) {
     PickingManager pm;
@@ -273,7 +273,7 @@ TEST(PickingControllerTest, IdleMove) {
     {
         SCOPED_TRACE("Move 1,1 -> 1,2");
         uvec2 pos{1, 2};  // id = 0
-        auto event = mouseEvent(B::None, S::Move, Bs(flags::empty), pos, dim); 
+        auto event = mouseEvent(B::None, S::Move, Bs(flags::empty), pos, dim);
         TestPropagator tp;
         ms.propagateEvent(&event, &tp, canvas[dim.y - pos.y][pos.x]);
         ASSERT_EQ(tp.events.size(), 0);
@@ -288,7 +288,7 @@ TEST(PickingControllerTest, MoveMouseAround) {
     {
         uvec2 pos{1, 1};  // id = 0
         auto event = mouseEvent(B::None, S::Move, Bs(flags::empty), pos, dim);
-        
+
         TestPropagator tp;
         ms.propagateEvent(&event, &tp, canvas[dim.y - pos.y][pos.x]);
         ASSERT_EQ(tp.events.size(), 0);
@@ -320,7 +320,7 @@ TEST(PickingControllerTest, MoveMouseAround) {
         uvec2 pre{3, 4};  // id = 1
         uvec2 pos{1, 4};  // id = 0
         auto event = mouseEvent(B::None, S::Move, Bs(flags::empty), pos, dim);
-        
+
         TestPropagator tp;
         ms.propagateEvent(&event, &tp, canvas[dim.y - pos.y][pos.x]);
         ASSERT_EQ(tp.events.size(), 1);
@@ -363,7 +363,7 @@ void doMousePress(PickingControllerMouseState& ms) {
     {
         uvec2 pos{1, 1};  // id = 0
         auto event = mouseEvent(B::None, S::Move, Bs(flags::empty), pos, dim);
-        
+
         TestPropagator tp;
         ms.propagateEvent(&event, &tp, canvas[dim.y - pos.y][pos.x]);
         ASSERT_EQ(tp.events.size(), 0);
