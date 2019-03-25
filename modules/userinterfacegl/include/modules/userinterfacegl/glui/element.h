@@ -155,6 +155,12 @@ public:
     void setAction(const std::function<void()> &action);
 
     /**
+     * Sets a called for picking events to implement custom behaviors
+     */
+    void setPickingEventAction(std::function<void(PickingEvent *e)> pickingAction);
+
+protected:
+    /**
      * \brief updates the UI state and triggers the callback action set by setAction().
      * This function is called when the user releases the mouse button.
      *
@@ -180,7 +186,6 @@ public:
      */
     bool moveAction(const dvec2 &delta);
 
-protected:
     void updateExtent();
     void updateLabelPos();
     void updateLabel();
@@ -219,6 +224,8 @@ protected:
     std::function<void()>
         action_;  //<! is called by triggerAction() after the internal state has been updated
     std::function<bool(const dvec2 &)> moveAction_;  //!< is called by mouseMoved()
+
+    std::function<void(PickingEvent *e)> pickingAction_;
 
     // UI interaction states
     bool hovered_;  // true as long as the element is under the mouse and element is enabled
