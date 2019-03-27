@@ -43,6 +43,7 @@
 
 namespace inviwo {
 
+/*
 PYBIND11_EMBEDDED_MODULE(inviwo_internal, m) {
     // `m` is a `py::module` which is used to bind functions and classes
     m.def("ivwPrint", [](const std::string& msg, int isStderr) {
@@ -59,30 +60,36 @@ PYBIND11_EMBEDDED_MODULE(inviwo_internal, m) {
         }
     });
 }
+*/
 
-PythonInterpreter::PythonInterpreter(Python3Module* module) : isInit_(false) {
+PythonInterpreter::PythonInterpreter(Python3Module* module) : embedded_{false}, isInit_(false) {
     namespace py = pybind11;
 
     if (isInit_) {
         throw ModuleInitException("Python already initialized", IvwContext);
     }
 
-    LogInfo("Python version: " + toString(Py_GetVersion()));
-    static wchar_t programName[] = L"PyInviwo";
-    Py_SetProgramName(programName);
-
-    py::initialize_interpreter(false);
-    isInit_ = true;
-
     if (!Py_IsInitialized()) {
-        throw ModuleInitException("Python is not Initialized", IvwContext);
+
+        LogInfo("Python version: " + toString(Py_GetVersion()));
+        static wchar_t programName[] = L"PyInviwo";
+        Py_SetProgramName(programName);
+
+        py::initialize_interpreter(false);
+        isInit_ = true;
+        embedded_ = true;
+
+        if (!Py_IsInitialized()) {
+            throw ModuleInitException("Python is not Initialized", IvwContext);
+        }
     }
 
-    auto dict = py::globals();
-    dict["inviwo_internal"] = py::module::import("inviwo_internal");
+    // auto dict = py::globals();
+    // dict["inviwo_internal"] = py::module::import("inviwo_internal");
 
     addModulePath(module->getPath() + "/scripts");
 
+    /*
     try {
         py::exec(R"(
             import sys
@@ -94,13 +101,14 @@ PythonInterpreter::PythonInterpreter(Python3Module* module) : isInit_(false) {
                 def write(self, string):
                     inviwo_internal.ivwPrint(string, 1)
 
-            sys.stdout = OutputRedirectStdout()  
-            sys.stderr = OutputRedirectStderr() 
+            sys.stdout = OutputRedirectStdout()
+            sys.stderr = OutputRedirectStderr()
         )",
                  py::globals());
     } catch (const py::error_already_set& e) {
         throw ModuleInitException(e.what(), IvwContext);
     }
+    */
 
 #if defined(__unix__) || defined(__APPLE__)
     auto execpath = filesystem::getExecutablePath();
@@ -115,7 +123,9 @@ PythonInterpreter::PythonInterpreter(Python3Module* module) : isInit_(false) {
 
 PythonInterpreter::~PythonInterpreter() {
     namespace py = pybind11;
-    py::finalize_interpreter();
+    if (embedded_) {
+        py::finalize_interpreter();
+    }
 }
 
 void PythonInterpreter::addModulePath(const std::string& path) {

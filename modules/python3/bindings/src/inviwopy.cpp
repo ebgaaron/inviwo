@@ -105,6 +105,11 @@ PYBIND11_MODULE(inviwopy, m) {
     m.def("logError", [](const std::string& msg) { LogErrorCustom("inviwopy", msg); });
     m.def("debugBreak", []() { util::debugBreak(); });
 
+    if(InviwoApplication::isInitialized()) {
+        m.attr("app") = py::cast(InviwoApplication::getPtr(), py::return_value_policy::reference);
+    }
+
+    /*
     try {
         if (auto app = util::getInviwoApplication()) {
             m.attr("app") = py::cast(app, py::return_value_policy::reference);
@@ -113,6 +118,7 @@ PYBIND11_MODULE(inviwopy, m) {
         LogErrorCustom("inviwopy",
                        "Failed to get Inviwo application, inviwopy will not function as expected");
     }
+    */
 
 #ifdef IVW_ENABLE_MSVC_MEM_LEAK_TEST
     VLDEnable();
