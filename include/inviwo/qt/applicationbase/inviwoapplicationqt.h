@@ -65,7 +65,8 @@ private:
 class IVW_QTAPPLICATIONBASE_API InviwoApplicationQt : public QApplication,
                                                       public InviwoApplication {
 public:
-    InviwoApplicationQt(int& argc, char** argv, const std::string& displayName);
+    InviwoApplicationQt(const std::string& displayName = "Inviwo");
+    InviwoApplicationQt(int argc, char** argv, const std::string& displayName);
     virtual ~InviwoApplicationQt() = default;
 
     virtual void registerFileObserver(FileObserver* fileObserver) override;

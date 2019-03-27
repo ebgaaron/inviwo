@@ -43,15 +43,6 @@
 
 namespace py = pybind11;
 
-namespace inviwo {
-
-std::shared_ptr<Logger> getLogger() {
-    static std::shared_ptr<Logger> logger = std::make_shared<inviwo::ConsoleLogger>();
-    return logger;
-}
-
-}  // namespace inviwo
-
 PYBIND11_MODULE(inviwopyapp, m) {
     using namespace inviwo;
 
@@ -61,8 +52,8 @@ PYBIND11_MODULE(inviwopyapp, m) {
     auto logger = std::make_shared<inviwo::ConsoleLogger>();
     LogCentral::getPtr()->registerLogger(logger);
 
-    int argc = 0;
-    auto app = new InviwoApplicationQt(argc, nullptr, "inviwo");
+    //int argc = 0;
+    //auto app = new InviwoApplicationQt(argc, nullptr, "inviwo");
 
     /*
     auto win = new QMainWindow();
@@ -78,13 +69,16 @@ PYBIND11_MODULE(inviwopyapp, m) {
         .def("log", &ConsoleLogger::log);
 
     py::class_<InviwoApplicationQt, InviwoApplication>(m, "InviwoApplicationQt")
+        .def(py::init<>())
+        .def(py::init<const std::string&>())
         .def("run", [](InviwoApplicationQt* self) { self->exec(); })
         .def("registerModules",
              [](InviwoApplicationQt* self) { self->registerModules(inviwo::getModuleList()); });
+    
+
+    m.def("getApp", [](){return InviwoApplication::getPtr();});
 
     m.attr("consolelogger") = py::cast(logger);
-    m.attr("app") = py::cast(app, py::return_value_policy::reference);
-    m.def("run", [app]() { app->exec(); }, "Run the inviwo event loop");
-
-
+    //m.attr("app") = py::cast(app, py::return_value_policy::reference);
+    //m.def("run", [app]() { app->exec(); }, "Run the inviwo event loop");
 }

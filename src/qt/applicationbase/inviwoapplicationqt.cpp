@@ -55,7 +55,7 @@
 
 namespace inviwo {
 
-InviwoApplicationQt::InviwoApplicationQt(int& argc, char** argv, const std::string& displayName)
+InviwoApplicationQt::InviwoApplicationQt(int argc, char** argv, const std::string& displayName)
     : QApplication(argc, argv)
     , InviwoApplication(argc, argv, displayName)
     , mainWindow_(nullptr)
@@ -95,6 +95,9 @@ InviwoApplicationQt::InviwoApplicationQt(int& argc, char** argv, const std::stri
     // Make qt write errors in the console;
     qInstallMessageHandler(&InviwoApplicationQt::logQtMessages);
 }
+
+InviwoApplicationQt::InviwoApplicationQt(const std::string& displayName)
+    : InviwoApplicationQt(0, nullptr, displayName) {}
 
 void InviwoApplicationQt::setMainWindow(QMainWindow* mainWindow) {
     mainWindow_ = mainWindow;
