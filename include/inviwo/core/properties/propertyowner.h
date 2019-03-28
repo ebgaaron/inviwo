@@ -56,8 +56,8 @@ public:
     PropertyOwner& operator=(const PropertyOwner& that);
     virtual ~PropertyOwner() = default;
 
-    virtual Property& addProperty(Property* property, bool owner = true);
-    virtual Property& addProperty(Property& property);
+    virtual void addProperty(Property* property, bool owner = true);
+    virtual void addProperty(Property& property);
 
     template <typename... Ts>
     void addProperties(Ts&... properties);
