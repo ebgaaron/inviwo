@@ -5,13 +5,13 @@ import inviwopy as ivw
 class {name}(ivw.Processor):
     def __init__(self, id, name):
         ivw.Processor.__init__(self, id, name)
-        self.inport = ivw.data.VolumeInport("inport")
-        self.addInport(self.inport)
-        self.outport = ivw.data.VolumeOutport("outport")
-        self.addOutport(self.outport)
+        self.inport = ivw.data.ImageInport("inport")
+        self.addInport(self.inport, owner=False)
+        self.outport = ivw.data.ImageOutport("outport")
+        self.addOutport(self.outport, owner=False)
 
         self.slider = ivw.properties.IntProperty("slider", "slider", 0, 0, 100, 1)
-        self.addProperty(self.slider)
+        self.addProperty(self.slider, owner=False)
 
     @staticmethod
     def processorInfo():

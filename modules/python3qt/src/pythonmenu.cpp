@@ -89,7 +89,7 @@ PythonMenu::PythonMenu(InviwoModule* pymodule, InviwoApplication* app) {
         auto newPythonProcessor =
             menu_->addAction(QIcon(":/svgicons/processor-new.svg"), "&New Python Processor");
         win->connect(newPythonProcessor, &QAction::triggered, [pymodule, win, app]() {
-            InviwoFileDialog saveFileDialog(nullptr, "Create Python Processor");
+            InviwoFileDialog saveFileDialog(nullptr, "Create Python Processor", "PythonProcessor");
             saveFileDialog.setFileMode(FileMode::AnyFile);
             saveFileDialog.setAcceptMode(AcceptMode::Save);
             saveFileDialog.setConfirmOverwrite(true);
