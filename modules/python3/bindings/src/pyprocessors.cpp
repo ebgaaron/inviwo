@@ -100,10 +100,17 @@ void exposeProcessors(pybind11::module &m) {
         .def("getMatches", &Tags::getMatches)
         .def_readwrite("tags", &Tags::tags_)
         .def(py::self == py::self)
-        .def(py::self < py::self);
+        .def(py::self < py::self)
+        .def_readonly_static("CPU", &Tags::CPU)
+        .def_readonly_static("GL", &Tags::GL)
+        .def_readonly_static("CL", &Tags::CL)
+        .def_readonly_static("PY", &Tags::PY);
+        
 
     py::class_<ProcessorInfo>(m, "ProcessorInfo")
-        .def(py::init<std::string, std::string, std::string, CodeState, Tags, bool>())
+        .def(py::init<std::string, std::string, std::string, CodeState, Tags, bool>(),
+             py::arg("classIdentifier"), py::arg("displayName"), py::arg("category") = "Python",
+             py::arg("codeState") = CodeState::Stable, py::arg("tags") = Tags::PY, py::arg("visible") = true)
         .def_readonly("classIdentifier", &ProcessorInfo::classIdentifier)
         .def_readonly("displayName", &ProcessorInfo::displayName)
         .def_readonly("category", &ProcessorInfo::category)
