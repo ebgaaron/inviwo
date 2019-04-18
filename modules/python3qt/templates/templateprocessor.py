@@ -16,13 +16,12 @@ class {name}(ivw.Processor):
     @staticmethod
     def processorInfo():
         return ivw.ProcessorInfo(
-    		"org.inviwo.{name}",     # Class identifier
-    		"{name}",                # Display name
-    		"Python",                # Category
-    		ivw.CodeState.Stable, 	 # Code state
-    		ivw.Tags("Python"),      # Tags
-    		True                     # Visible   
-   		)
+    		classIdentifier = "org.inviwo.{name}", 
+    		displayName = "{name}",
+    		category = "Python",
+    		codeState = ivw.CodeState.Stable,
+    		tags = ivw.Tags.PY
+        )
 
     def getProcessorInfo(self):
         return {name}.processorInfo()
