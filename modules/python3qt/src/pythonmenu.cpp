@@ -32,6 +32,7 @@
 #include <modules/qtwidgets/inviwoqtutils.h>
 #include <modules/qtwidgets/inviwofiledialog.h>
 #include <inviwo/core/common/inviwomodule.h>
+#include <inviwo/core/util/filesystem.h>
 
 #include <fmt/format.h>
 #include <fmt/ostream.h>
