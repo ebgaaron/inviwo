@@ -49,6 +49,7 @@ set(SOURCE_FILES
 ivw_group("Source Files" ${SOURCE_FILES})
 
 ivw_add_py_wrapper(inviwopy ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(inviwopy PUBLIC inviwo::core inviwo::module::python3)
 target_include_directories(inviwopy PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 ivw_default_install_comp_targets(python inviwopy)
