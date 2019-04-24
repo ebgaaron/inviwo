@@ -105,12 +105,12 @@ void exposeProcessors(pybind11::module &m) {
         .def_readonly_static("GL", &Tags::GL)
         .def_readonly_static("CL", &Tags::CL)
         .def_readonly_static("PY", &Tags::PY);
-        
 
     py::class_<ProcessorInfo>(m, "ProcessorInfo")
         .def(py::init<std::string, std::string, std::string, CodeState, Tags, bool>(),
              py::arg("classIdentifier"), py::arg("displayName"), py::arg("category") = "Python",
-             py::arg("codeState") = CodeState::Stable, py::arg("tags") = Tags::PY, py::arg("visible") = true)
+             py::arg("codeState") = CodeState::Stable, py::arg("tags") = Tags::PY,
+             py::arg("visible") = true)
         .def_readonly("classIdentifier", &ProcessorInfo::classIdentifier)
         .def_readonly("displayName", &ProcessorInfo::displayName)
         .def_readonly("category", &ProcessorInfo::category)
@@ -154,7 +154,7 @@ void exposeProcessors(pybind11::module &m) {
     exposeVectorIdentifierWrapper<std::vector<Outport *>>(m, "OutportVectorWrapper");
 
     py::class_<Processor, ProcessorTrampoline, PropertyOwner, ProcessorPtr<Processor>>(
-        m, "Processor", py::dynamic_attr{})
+        m, "Processor", py::dynamic_attr{}, py::multiple_inheritance{})
         .def(py::init<const std::string &, const std::string &>())
         .def_property_readonly("classIdentifier", &Processor::getClassIdentifier)
         .def_property("displayName", &Processor::getDisplayName, &Processor::setDisplayName)

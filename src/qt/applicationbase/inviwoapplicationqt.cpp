@@ -68,8 +68,7 @@ InviwoApplicationQt::InviwoApplicationQt(int argc, char** argv, const std::strin
     QCoreApplication::setOrganizationDomain("inviwo.org");
     QCoreApplication::setApplicationName(displayName.c_str());
 
-    setPostEnqueueFront([this]() {
-        postEvent(this, new InviwoQtEvent()); });
+    setPostEnqueueFront([this]() { postEvent(this, new InviwoQtEvent()); });
 
     fileWatcher_ = new QFileSystemWatcher(this);
     connect(fileWatcher_, &QFileSystemWatcher::fileChanged, this,

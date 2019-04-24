@@ -2,24 +2,25 @@
 # Create python module
 set(HEADER_FILES
     include/inviwopy/inviwopy.h
-    include/inviwopy/pyglmtypes.h
-    include/inviwopy/pyglmmattypes.h
-    include/inviwopy/pyport.h
-    include/inviwopy/pyprocessors.h
-    include/inviwopy/pyproperties.h
-    include/inviwopy/vectoridentifierwrapper.h
     include/inviwopy/pybuffer.h
     include/inviwopy/pydataformat.h
     include/inviwopy/pydatamapper.h
+    include/inviwopy/pyglmmattypes.h
+    include/inviwopy/pyglmtypes.h
     include/inviwopy/pyimage.h
     include/inviwopy/pyinviwoapplication.h
     include/inviwopy/pyinviwomodule.h
+    include/inviwopy/pylogging.h
     include/inviwopy/pymesh.h
     include/inviwopy/pynetwork.h
     include/inviwopy/pypickingmapper.h
+    include/inviwopy/pyport.h
+    include/inviwopy/pyprocessors.h
+    include/inviwopy/pyproperties.h
     include/inviwopy/pypropertyowner.h
     include/inviwopy/pytfprimitiveset.h
     include/inviwopy/pyvolume.h
+    include/inviwopy/vectoridentifierwrapper.h
 )
 ivw_group("Header Files" BASE ${CMAKE_CURRENT_SOURCE_DIR}/include/inviwopy ${HEADER_FILES})
 
@@ -28,11 +29,12 @@ set(SOURCE_FILES
     src/pybuffer.cpp
     src/pydataformat.cpp
     src/pydatamapper.cpp
-    src/pyglmtypes.cpp
     src/pyglmmattypes.cpp
+    src/pyglmtypes.cpp
     src/pyimage.cpp
     src/pyinviwoapplication.cpp
     src/pyinviwomodule.cpp
+    src/pylogging.cpp
     src/pymesh.cpp
     src/pynetwork.cpp
     src/pypickingmapper.cpp

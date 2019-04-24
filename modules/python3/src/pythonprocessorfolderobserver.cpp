@@ -56,7 +56,7 @@ bool PythonProcessorFolderObserver::registerFile(const std::string& filename) {
     const auto isEmpty = [](const std::string& file) {
         auto ifs = filesystem::ifstream(file);
         ifs.seekg(0, std::ios::end);
-        return  ifs.tellg() == std::streampos(0);
+        return ifs.tellg() == std::streampos(0);
     };
 
     if (std::count(registeredFiles_.begin(), registeredFiles_.end(), filename) == 0) {
