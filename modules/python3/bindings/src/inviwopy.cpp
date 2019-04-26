@@ -84,7 +84,6 @@ PYBIND11_MODULE(inviwopy, m) {
 
     exposeLogging(m);
     exposeInviwoApplication(m);
-    exposeInviwoModule(m);
     exposeDataFormat(formatsModule);
     exposePropertyOwner(propertiesModule);
     exposeProperties(propertiesModule);
@@ -99,6 +98,7 @@ PYBIND11_MODULE(inviwopy, m) {
     exposeBuffer(dataModule);
     exposeMesh(dataModule);
     exposeTFPrimitiveSet(dataModule);
+    exposeInviwoModule(m);
 
     py::class_<Settings, PropertyOwner, std::unique_ptr<Settings, py::nodelete>>(m, "Settings");
 

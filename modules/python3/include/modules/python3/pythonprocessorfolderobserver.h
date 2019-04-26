@@ -30,6 +30,7 @@
 
 #include <modules/python3/python3moduledefine.h>
 #include <inviwo/core/common/inviwo.h>
+#include <inviwo/core/common/inviwomodule.h>
 
 #include <inviwo/core/util/fileobserver.h>
 #include <inviwo/core/processors/processorfactoryobject.h>
@@ -38,9 +39,8 @@ namespace inviwo {
 
 class IVW_MODULE_PYTHON3_API PythonProcessorFolderObserver : public FileObserver {
 public:
-    PythonProcessorFolderObserver(
-        InviwoApplication* app, const std::string& directory,
-        std::function<void(std::unique_ptr<ProcessorFactoryObject>)> onNew);
+    PythonProcessorFolderObserver(InviwoApplication* app, const std::string& directory,
+                                  InviwoModule& module);
     virtual ~PythonProcessorFolderObserver() = default;
 
 private:
@@ -50,7 +50,7 @@ private:
     InviwoApplication* app_;
     std::string directory_;
     std::vector<std::string> registeredFiles_;
-    std::function<void(std::unique_ptr<ProcessorFactoryObject>)> onNew_;
+    InviwoModule& module_;
 };
 
 }  // namespace inviwo

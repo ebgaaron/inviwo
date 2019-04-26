@@ -39,8 +39,8 @@ namespace inviwo {
 
 PythonProcessorFolderObserver::PythonProcessorFolderObserver(
     InviwoApplication* app, const std::string& directory,
-    std::function<void(std::unique_ptr<ProcessorFactoryObject>)> onNew)
-    : FileObserver(app), app_(app), directory_{directory}, onNew_{onNew} {
+    InviwoModule& module)
+    : FileObserver(app), app_(app), directory_{directory}, module_{module} {
 
     if (filesystem::directoryExists(directory)) {
         auto files = filesystem::getDirectoryContents(directory);
@@ -65,8 +65,8 @@ bool PythonProcessorFolderObserver::registerFile(const std::string& filename) {
 
         try {
             auto pfo = std::make_unique<PythonProcessorFactoryObject>(app_, filename);
+            module_.registerProcessor(std::move(pfo));
             registeredFiles_.push_back(filename);
-            onNew_(std::move(pfo));
             return true;
         } catch (const std::exception& e) {
             LogError(e.what());
