@@ -212,6 +212,7 @@ void exposeProcessors(pybind11::module &m) {
     py::class_<Processor, ProcessorTrampoline, PropertyOwner, ProcessorPtr<Processor>>(
         m, "Processor", py::dynamic_attr{}, py::multiple_inheritance{})
         .def(py::init<const std::string &, const std::string &>())
+        .def("__repr__", &Processor::getIdentifier)
         .def_property_readonly("classIdentifier", &Processor::getClassIdentifier)
         .def_property("displayName", &Processor::getDisplayName, &Processor::setDisplayName)
         .def("getProcessorInfo", &Processor::getProcessorInfo)
