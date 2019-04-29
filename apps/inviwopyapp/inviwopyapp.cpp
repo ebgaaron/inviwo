@@ -56,8 +56,7 @@ PYBIND11_MODULE(inviwopyapp, m) {
     py::class_<InviwoApplicationQt, InviwoApplication>(m, "InviwoApplicationQt",
                                                        py::multiple_inheritance{})
         .def(py::init([]() {
-            int argc = 0;
-            auto app = new InviwoApplicationQt(argc, nullptr, "inviwo");
+            auto app = new InviwoApplicationQt("inviwo");
             app->setStyleSheetFile(":/stylesheets/inviwo.qss");
 
             auto win = new QMainWindow();

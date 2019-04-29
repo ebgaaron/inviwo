@@ -55,6 +55,18 @@
 
 namespace inviwo {
 
+namespace {
+
+int dummyArgc = 1;
+
+char** dummyArgs() {
+    static char* dummyArgv = new char[7];
+    sprintf(dummyArgv, "inviwo");
+    return &dummyArgv;
+}
+
+}  // namespace
+
 InviwoApplicationQt::InviwoApplicationQt(int argc, char** argv, const std::string& displayName)
     : QApplication(argc, argv)
     , InviwoApplication(argc, argv, displayName)
@@ -100,7 +112,7 @@ InviwoApplicationQt::InviwoApplicationQt(int argc, char** argv, const std::strin
 }
 
 InviwoApplicationQt::InviwoApplicationQt(const std::string& displayName)
-    : InviwoApplicationQt(0, nullptr, displayName) {}
+    : InviwoApplicationQt(dummyArgc, dummyArgs(), displayName) {}
 
 void InviwoApplicationQt::setMainWindow(QMainWindow* mainWindow) {
     mainWindow_ = mainWindow;
